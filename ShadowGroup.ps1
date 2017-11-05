@@ -7,6 +7,7 @@
     OUs and makes sure it a member of the a specified AD ShadowGroup.
     
     Updates:
+    11-5-17 - MLAB - Minor edits & comment cleanup
     7-16-17 - MLAB - Hello GitHub! :)
     11-07-16 - MLAB - Added logic to detect invalid OU names. Omits them from  
                searches and adds an error line to the logfile noting their presense.
@@ -35,7 +36,7 @@ Get-ChildItem $ScriptPath -Filter "*Log*.txt" | Where-Object {$_.LastWriteTime -
 # Name of Domain Controller
 # Replace <DOMAIN CONTROLLER> with the name of a DC and replace <FQDN OF DOMAIN> with the fully qualified 
 # name of the domain you're working with
-$Server = "DC01.MLAB.com"
+$Server = "<DOMAIN CONTROLLER>.<FQDN OF DOMAIN>"  # Example -->  "DC01.MLAB.com"
 Add-Content -Path $LogFile -Value "DC used for updates: $Server"
 
 # Distinguished Names of the OUs that contain the Computer Objects that are to be added to the Shadow Group
@@ -73,7 +74,7 @@ $ComputerObjectInOUs = $OUsForShadowGroup | ForEach-Object { Get-ADComputer -Ser
 
 # OU path to Shadow Group
 # Replace with the Distinguished Name of the Shadow Group
-$ShadowGroupDN = "CN=DirectAccess Computers,OU=Groups,DC=MLAB,DC=com"
+$ShadowGroupDN = "CN=<Group Name>,OU=Groups,DC=MLAB,DC=com"  # --> Example "CN=ADShadowGroup,OU=Groups,DC=MLAB,DC=com"
 Add-Content -Path $LogFile -Value "Working with the following ShadowGroup: $ShadowGroupDN"
 
 # Retreive current members of the shadow group
